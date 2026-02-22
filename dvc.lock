@@ -1,0 +1,28 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/data_preprocessing.py --raw-dir data/raw --out-dir 
+      data/processed
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: f9ec6744d1856485f6918c08378a90ab.dir
+      size: 848866410
+      nfiles: 24998
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 58b396e23b53f42cc51209792b624369
+      size: 4541
+    params:
+      params.yaml:
+        preprocess.image_size: 224
+        preprocess.split_ratios:
+          train: 0.8
+          val: 0.1
+          test: 0.1
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 00b856b6fa627f122ce0144b6946af94.dir
+      size: 242088439
+      nfiles: 24998

@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# MLflow
+mlruns/
+
+# Data (tracked by DVC)
+data/raw/
+data/processed/
+
+# Dataset archive (large files, not tracked)
+archive/
+archive.zip
+*.zip
+
+# Models (large files)
+models/*.pt
+models/*.h5
+models/*.pkl
+models/*.png
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+
+# Docker
+.dockerignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Test output files
+test_output.txt
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/

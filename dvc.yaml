@@ -1,0 +1,33 @@
+# DVC-tracked data pipeline
+stages:
+  preprocess:
+    cmd: python src/data_preprocessing.py --raw-dir data/raw --out-dir data/processed
+    deps:
+      - src/data_preprocessing.py
+      - data/raw
+    outs:
+      - data/processed
+    params:
+      - params.yaml:
+        - preprocess.image_size
+        - preprocess.split_ratios
+
+  train:
+    cmd: python src/train.py --data-dir data/processed --epochs ${train.epochs} --batch-size ${train.batch_size} --lr ${train.lr}
+    deps:
+      - src/train.py
+      - src/model.py
+      - src/utils.py
+      - data/processed
+    outs:
+      - models/cat_dog_model.pt
+      - models/loss_curves.png
+      - models/confusion_matrix.png
+    metrics:
+      - metrics.json:
+          cache: false
+    params:
+      - params.yaml:
+        - train.epochs
+        - train.batch_size
+        - train.lr

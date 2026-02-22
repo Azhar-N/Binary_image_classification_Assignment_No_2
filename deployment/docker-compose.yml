@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  catdog-api:
+    image: ${DOCKERHUB_USERNAME:-localuser}/catdog-classifier:${IMAGE_TAG:-latest}
+    container_name: catdog-api
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=/app/models/cat_dog_model.pt
+    volumes:
+      # Mount local model file if running locally without a pre-built image
+      - ./models:/app/models:ro
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - catdog-net
+
+  prometheus:
+    image: prom/prometheus:v2.50.1
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=7d"
+    depends_on:
+      - catdog-api
+    networks:
+      - catdog-net
+
+networks:
+  catdog-net:
+    driver: bridge
