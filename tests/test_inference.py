@@ -57,9 +57,10 @@ class TestTransforms:
     def test_val_transform_normalized(self):
         """After normalization, pixel values should not be strictly in [0, 1]."""
         transform = get_val_transforms()
-        img = Image.new("RGB", (224, 224), color=(255, 255, 255))
+        # Black image (0,0,0): after ToTensor → 0.0, then (0.0 - mean) / std < 0 for all channels
+        img = Image.new("RGB", (224, 224), color=(0, 0, 0))
         tensor = transform(img)
-        # White image normalized with ImageNet stats goes below 0
+        # Black image normalized with ImageNet stats goes below 0 (e.g. R: -0.485/0.229 ≈ -2.12)
         assert tensor.min().item() < 0.0
 
 
