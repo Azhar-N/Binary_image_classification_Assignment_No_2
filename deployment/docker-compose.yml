@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   catdog-api:
-    image: ${DOCKERHUB_USERNAME:-localuser}/catdog-classifier:${IMAGE_TAG:-latest}
+    image: ghcr.io/${REPO_OWNER:-localuser}/catdog-classifier:${IMAGE_TAG:-latest}
     container_name: catdog-api
     ports:
       - "8000:8000"
