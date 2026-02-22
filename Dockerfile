@@ -24,6 +24,9 @@ ENV PATH=/root/.local/bin:$PATH
 # Copy application source
 COPY app/ ./app/
 COPY src/ ./src/
+
+# Copy models dir (contains .gitkeep in CI; real .pt file in production builds)
+RUN mkdir -p ./models
 COPY models/ ./models/
 
 # Expose API port

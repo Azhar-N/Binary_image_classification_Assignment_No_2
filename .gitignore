@@ -34,6 +34,7 @@ models/*.pt
 models/*.h5
 models/*.pkl
 models/*.png
+!models/.gitkeep
 
 # DVC
 .dvc/cache/
