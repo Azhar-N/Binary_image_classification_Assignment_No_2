@@ -133,17 +133,14 @@ python monitoring/simulate_requests.py --n 50 --url http://localhost:8000
 
 ## CI/CD Setup (GitHub Actions)
 
-Add these secrets to your GitHub repository (`Settings → Secrets`):
+No secrets required! The pipeline uses GitHub's built-in `GITHUB_TOKEN` to authenticate with **GitHub Container Registry (GHCR)**.
 
-| Secret | Description |
-|---|---|
-| `DOCKERHUB_USERNAME` | Your Docker Hub username |
-| `DOCKERHUB_TOKEN` | Docker Hub access token |
+> **One-time setup:** Go to `Settings → Actions → General → Workflow permissions` and enable **"Read and write permissions"**.
 
-The pipeline runs on every push to `main`:
-1. Runs all unit tests
-2. Builds Docker image
-3. Pushes to Docker Hub
+The pipeline runs automatically on every push to `main`:
+1. Runs all unit tests (pytest)
+2. Builds Docker image (multi-stage)
+3. Pushes to `ghcr.io/azhar-n/catdog-classifier`
 4. Deploys with Docker Compose
 5. Runs smoke tests
 

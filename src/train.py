@@ -7,6 +7,7 @@ Usage:
 """
 
 import argparse
+import json
 import os
 from pathlib import Path
 
@@ -148,6 +149,21 @@ def train(args):
         )
         mlflow.log_metrics({"test_loss": test_loss, "test_acc": test_acc})
         print(f"\nTest  Loss: {test_loss:.4f} | Test  Acc: {test_acc:.4f}")
+
+        # ── Write metrics.json for DVC metric tracking ─────────────────────────
+        metrics = {
+            "test_loss": round(test_loss, 6),
+            "test_acc":  round(test_acc, 6),
+            "val_loss":  round(val_losses[-1], 6),
+            "val_acc":   round(0.0, 6),   # updated below after val eval
+            "epochs":    args.epochs,
+        }
+        # Re-use last epoch val metrics already captured in val_losses
+        _, last_val_acc, _, _ = evaluate(model, val_loader, criterion, device)
+        metrics["val_acc"] = round(last_val_acc, 6)
+        with open("metrics.json", "w") as mf:
+            json.dump(metrics, mf, indent=2)
+        print(f"DVC metrics written to metrics.json: {metrics}")
 
         # ── Save model checkpoint ──────────────────────────────────────────────
         checkpoint_path = MODEL_DIR / "cat_dog_model.pt"
