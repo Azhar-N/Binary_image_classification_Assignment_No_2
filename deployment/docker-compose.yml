@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   catdog-api:
     image: ghcr.io/${REPO_OWNER:-localuser}/catdog-classifier:${IMAGE_TAG:-latest}
