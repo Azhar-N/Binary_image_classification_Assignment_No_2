@@ -1,14 +1,19 @@
 services:
   catdog-api:
     image: ghcr.io/${REPO_OWNER:-localuser}/catdog-classifier:${IMAGE_TAG:-latest}
+    # build: is used for local dev (docker compose up --build)
+    # CI pulls the pre-built image from GHCR instead
+    build:
+      context: ..
+      dockerfile: Dockerfile
     container_name: catdog-api
     ports:
       - "8000:8000"
     environment:
       - MODEL_PATH=/app/models/cat_dog_model.pt
     volumes:
-      # Mount local model file if running locally without a pre-built image
-      - ./models:/app/models:ro
+      # Mount local model file so container gets the real .pt
+      - ../models:/app/models:ro
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]

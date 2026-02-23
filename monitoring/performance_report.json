@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-23T14:38:26.819170",
+  "total_requests": 50,
+  "successful": 50,
+  "accuracy": 0.5,
+  "cat_accuracy": 1.0,
+  "dog_accuracy": 0.0,
+  "avg_confidence": 0.7571,
+  "avg_latency_ms": 94.97,
+  "p95_latency_ms": 117.43
+}
