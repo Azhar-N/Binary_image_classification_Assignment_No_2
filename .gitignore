@@ -27,7 +27,7 @@ data/processed/
 # Dataset archive (large files, not tracked)
 archive/
 archive.zip
-*.zip
+
 
 # Models (large files)
 models/*.pt
