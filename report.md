@@ -26,7 +26,6 @@
 6. [M5 — Monitoring, Logs & Performance Tracking](#m5--monitoring-logs--performance-tracking)
 7. [Architecture Diagram](#architecture-diagram)
 8. [Tools & Technology Stack](#tools--technology-stack)
-9. [Deliverables Checklist](#deliverables-checklist)
 
 <div style="page-break-after: always;"></div>
 
